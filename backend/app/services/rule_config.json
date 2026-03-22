@@ -1,0 +1,17 @@
+{
+  "red_flag_combinations": [
+    ["CHEST_PAIN", "BREATHLESSNESS"],
+    ["CHEST_PAIN", "LEFT_ARM_PAIN"],
+    ["SEVERE_HEADACHE", "BLURRED_VISION"],
+    ["HIGH_FEVER", "STIFF_NECK"]
+  ],
+  "red_flag_single": [
+    "CHEST_PAIN",
+    "SEIZURE",
+    "LOSS_OF_CONSCIOUSNESS"
+  ],
+  "severity_rules": {
+    "HIGH": 7,
+    "MEDIUM": 4
+  }
+}
