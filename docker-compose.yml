@@ -24,6 +24,19 @@ services:
     volumes:
       - ./backend/app:/app/app
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://backend:8000
+    container_name: symptom_frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "4173:80"
+
   adminer:
     image: adminer
     restart: always

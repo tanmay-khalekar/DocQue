@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DocQue icon">
+  <rect width="64" height="64" rx="8" fill="#0f172a" />
+  <path d="M20 14h18l8 8v28H20V14z" fill="#f8fafc" />
+  <path d="M38 14v9h8" fill="#cbd5e1" />
+  <path d="M26 32h14M26 39h10" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />
+</svg>
