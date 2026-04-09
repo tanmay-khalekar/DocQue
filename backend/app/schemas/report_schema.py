@@ -13,20 +13,6 @@ class ReportCreate(BaseModel):
 
 
 # -----------------------------
-# REPORT RESPONSE
-# -----------------------------
-
-class ReportResponse(BaseModel):
-    report_id: int
-    user_id: int
-    generated_at: datetime
-    report_file: Optional[str]
-
-    class Config:
-        from_attributes = True
-
-
-# -----------------------------
 # TIMELINE ENTRY
 # -----------------------------
 
@@ -53,3 +39,31 @@ class SymptomReportResponse(BaseModel):
     recommended_specialist: Optional[str]
 
     timeline: List[SymptomTimelineEntry]
+
+
+class TimelineItem(BaseModel):
+    date: str
+    severity: int
+
+
+class RiskSummary(BaseModel):
+    High: int
+    Medium: int
+    Low: int
+
+
+
+# -----------------------------
+# REPORT RESPONSE
+# -----------------------------
+
+class ReportResponse(BaseModel):
+    user_id: int
+    trend: str
+    timeline: List[TimelineItem]
+    risk_summary: RiskSummary
+    latest_specialist: str | None
+    total_entries: int
+    class Config:
+        from_attributes = True
+

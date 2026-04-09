@@ -93,6 +93,15 @@ def get_entry_by_id(db: Session, entry_id: int) -> Optional[models.SymptomEntry]
     logger.info(f"Fetching symptom entry id={entry_id}")
     return db.get(models.SymptomEntry, entry_id)
 
+def get_entries_with_analysis(db: Session, user_id: int):
+    return (
+        db.query(models.SymptomEntry, models.SymptomAnalysis)
+        .join(models.SymptomAnalysis, models.SymptomEntry.entry_id == models.SymptomAnalysis.entry_id)
+        .filter(models.SymptomEntry.user_id == user_id)
+        .order_by(models.SymptomEntry.created_at.asc())
+        .all()
+    )
+
 def update_symptom_entry(
     db: Session, entry: models.SymptomEntry, update_data: dict
 ) -> models.SymptomEntry:
@@ -188,6 +197,9 @@ def delete_specialist(db: Session, specialist: models.Specialist) -> None:
         db.rollback()
         logger.error(f"Error deleting specialist id={specialist.specialist_id}: {e}")
         raise
+
+def get_specialist_by_name(db: Session, name: str) -> Optional[models.Specialist]:
+    return db.query(models.Specialist).filter(models.Specialist.name == name).first()
 # -----------------------------
 # REPORT CRUD
 # -----------------------------

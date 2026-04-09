@@ -8,3 +8,4 @@ reportlab
 httpx
 requests
 groq
+reportlab

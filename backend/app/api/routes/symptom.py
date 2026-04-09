@@ -47,17 +47,18 @@ def create_symptom_entry(entry_data: SymptomEntryCreate, db: Session = Depends(g
 
         rule_output = evaluate_risk_and_specialist(llm_data)
 
+        specialist_obj = crud.get_specialist_by_name(
+            db, rule_output["specialist"]
+            )
+
+        specialist_id = specialist_obj.specialist_id if specialist_obj else None
+
         analysis_payload = SymptomAnalysisCreate(
-            entry_id=entry.entry_id, # type: ignore
-            structured_symptoms={
-                "symptoms": llm_data.get("symptoms"),
-                "category": llm_data.get("category"),
-                "duration": llm_data.get("duration"),
-                "summary": llm_data.get("summary")
-            },
-            severity_score=llm_data.get("severity_score", 5),
+            entry_id=entry.entry_id,
+            structured_symptoms=llm_data,
+            severity_score=llm_data.get("severity_score"),
             risk_level=rule_output["risk_level"],
-            specialist_id=None
+            specialist_id=specialist_id
         )
 
         analysis = crud.create_symptom_analysis(db, analysis_payload)
