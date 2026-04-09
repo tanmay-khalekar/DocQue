@@ -43,7 +43,7 @@ def create_symptom_entry(entry_data: SymptomEntryCreate, db: Session = Depends(g
     analysis_status = "success"
 
     try:
-        llm_data = analyze_symptom_text(entry.symptom_text) 
+        llm_data = analyze_symptom_text(entry.symptom_text)  # type: ignore
 
         rule_output = evaluate_risk_and_specialist(llm_data)
 
@@ -54,11 +54,11 @@ def create_symptom_entry(entry_data: SymptomEntryCreate, db: Session = Depends(g
         specialist_id = specialist_obj.specialist_id if specialist_obj else None
 
         analysis_payload = SymptomAnalysisCreate(
-            entry_id=entry.entry_id,
+            entry_id=entry.entry_id, # type: ignore
             structured_symptoms=llm_data,
             severity_score=llm_data.get("severity_score"),
             risk_level=rule_output["risk_level"],
-            specialist_id=specialist_id
+            specialist_id=specialist_id # type: ignore
         )
 
         analysis = crud.create_symptom_analysis(db, analysis_payload)
